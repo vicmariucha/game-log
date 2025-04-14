@@ -1,10 +1,13 @@
 package com.example.gamelog;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.AdapterView;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +44,7 @@ public class BuscarActivity extends AppCompatActivity {
         listUsuarios.setAdapter(adapter);
 
         // Listener para o campo de busca
-        editBusca.addTextChangedListener(new android.text.TextWatcher() {
+        editBusca.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
 
@@ -59,7 +62,21 @@ public class BuscarActivity extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(android.text.Editable editable) {}
+            public void afterTextChanged(Editable editable) {}
+        });
+
+        // Listener de clique para abrir o perfil do usuário
+        listUsuarios.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, android.view.View view, int position, long id) {
+                // Obtém o nome do usuário clicado
+                String nomeUsuario = filteredUsers.get(position);
+
+                // Cria a intent para ir para o perfil do usuário
+                Intent intent = new Intent(BuscarActivity.this, PerfilActivity.class);
+                intent.putExtra("nomeUsuario", nomeUsuario); // Passa o nome do usuário para o perfil
+                startActivity(intent);
+            }
         });
     }
 }

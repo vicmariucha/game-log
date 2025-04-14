@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         tools:targetApi="31"
         android:theme="@style/Theme.GameLog">
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -19,16 +20,18 @@
             android:theme="@style/Theme.GameLog">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".NovaAvaliacaoActivity" />
         <activity android:name=".BuscarActivity" />
         <activity android:name=".ConfigActivity" />
+        <activity android:name=".PerfilActivity" /> <!-- Adicionada a PerfilActivity -->
+
     </application>
 
 </manifest>
