@@ -6,6 +6,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -14,29 +16,32 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        TextView txtUsuario = findViewById(R.id.txtUsuario);
-        txtUsuario.setText("Bem-vindo, " + DataHelper.getUsuarioLogado());
+        DataHelper.init(this);
+        DataHelper.User user = DataHelper.getCurrentUser();
 
-        ListView listAvaliacoes = findViewById(R.id.listAvaliacoes);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, DataHelper.getAvaliacoes());
-        listAvaliacoes.setAdapter(adapter);
+        TextView txtWelcome = findViewById(R.id.txtWelcome);
+        ListView listReviews = findViewById(R.id.listReviews);
 
-        findViewById(R.id.btnNovaAvaliacao).setOnClickListener(v -> {
-            startActivity(new Intent(this, NovaAvaliacaoActivity.class));
-        });
+        if (user != null) {
+            txtWelcome.setText("Bem-vindo, " + user.name);
 
-        findViewById(R.id.btnBuscar).setOnClickListener(v -> {
-            startActivity(new Intent(this, BuscarActivity.class));
-        });
+            // Carrega avaliações do usuário
+            List<DataHelper.Review> reviews = DataHelper.getUserReviews(user.id);
+            List<String> reviewItems = new ArrayList<>();
 
-        findViewById(R.id.btnHome).setOnClickListener(v -> {
-            finish();
-            startActivity(getIntent());
-        });
+            for (DataHelper.Review review : reviews) {
+                DataHelper.Game game = DataHelper.getGameById(review.gameId);
+                if (game != null) {
+                    reviewItems.add(game.name + " - " + review.rating + "★: " + review.comment);
+                }
+            }
 
-        findViewById(R.id.btnConfig).setOnClickListener(v -> {
-            startActivity(new Intent(this, ConfigActivity.class));
-        });
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                    this,
+                    android.R.layout.simple_list_item_1,
+                    reviewItems
+            );
+            listReviews.setAdapter(adapter);
+        }
     }
 }

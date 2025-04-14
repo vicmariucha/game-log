@@ -54,6 +54,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Cadastrar"
-            android:backgroundTint="@color/primary"/>
+            android:backgroundTint="@color/primary"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Já tem conta? Faça login"
+            android:textColor="@color/primary"
+            android:layout_gravity="center_horizontal"
+            android:clickable="true"
+            android:onClick="navigateToLogin"/>
     </LinearLayout>
 </ScrollView>
