@@ -69,7 +69,7 @@ public class DataHelper {
     // Dados em memória
     private static List<Game> games = new ArrayList<>();
     private static List<Review> reviews = new ArrayList<>();
-    private static List<User> users = new ArrayList<>();
+    private static List<User> users = new ArrayList<>();  // Modificado para ser uma ArrayList
     private static User currentUser = null;
 
     public static void init(Context context) {
@@ -106,12 +106,12 @@ public class DataHelper {
         );
 
         // 4 usuários iniciais (senha: Senha123)
-        users = Arrays.asList(
+        users = new ArrayList<>(Arrays.asList(  // Modificado para usar ArrayList
                 new User("u1", "João Silva", "joao@email.com", "Senha123"),
                 new User("u2", "Maria Souza", "maria@email.com", "Senha123"),
                 new User("u3", "Carlos Oliveira", "carlos@email.com", "Senha123"),
                 new User("u4", "Ana Pereira", "ana@email.com", "Senha123")
-        );
+        ));
 
         // 8 avaliações (2 por usuário)
         reviews = Arrays.asList(

@@ -54,6 +54,8 @@
             android:textColor="@color/primary"
             android:layout_gravity="center_horizontal"
             android:clickable="true"
-            android:onClick="navigateToSignUp"/>
+            android:focusable="true"
+            android:onClick="navigateToSignUp"
+            android:foreground="?attr/selectableItemBackground"/>
     </LinearLayout>
 </ScrollView>
