@@ -1,61 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/background"
     android:padding="16dp">
 
+    <!-- Texto de boas-vindas -->
     <TextView
         android:id="@+id/txtWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:layout_marginBottom="16dp"/>
+        android:textColor="@color/text_primary"
+        android:text="Bem-vindo!"
+        android:layout_alignParentTop="true" />
 
+    <!-- Lista de Avaliações -->
     <ListView
         android:id="@+id/listReviews"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        android:layout_below="@id/txtWelcome"
+        android:layout_above="@id/btnNovaAvaliacao"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp" />
 
+    <!-- Botão para adicionar nova avaliação -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnNovaAvaliacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="80dp"
+        android:layout_alignParentBottom="true"
+        android:contentDescription="Nova Avaliação"
+        app:srcCompat="@android:drawable/ic_input_add"
+        app:backgroundTint="@color/secondary" />
 
-    <LinearLayout
-        android:id="@+id/bottomNavigation"
+    <!-- Barra de navegação inferior -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:background="@color/nav_background">
-
-        <Button
-            android:id="@+id/btnNovaAvaliacao"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Nova"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
-
-        <Button
-            android:id="@+id/btnBuscar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Buscar"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
-
-        <Button
-            android:id="@+id/btnHome"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Home"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
-
-        <Button
-            android:id="@+id/btnConfig"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Config"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
-    </LinearLayout>
-</LinearLayout>
+        android:background="@color/nav_background"
+        app:menu="@menu/bottom_nav_menu"
+        app:itemIconTint="@color/primary"
+        app:itemTextColor="@color/primary" />
+</RelativeLayout>
