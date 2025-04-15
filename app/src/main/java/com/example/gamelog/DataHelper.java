@@ -309,27 +309,39 @@ public class DataHelper {
         return newGame;
     }
 
-    // Método para criar uma nova avaliação
+    // Metodo para criar uma nova avaliação
     public static void createReview(String userId, String gameId, float rating, String comment) {
-        String newId = "r" + (reviews.size() + 1);
+        String newId = "r" + (reviews.size() + 1);  // Gerar um novo ID
         Review newReview = new Review(newId, userId, gameId, (int) rating, comment);
-        reviews.add(newReview);
-        saveReviews(); // Salva as avaliações após a criação
+        reviews.add(newReview);  // Adiciona a avaliação à lista
+        saveReviews();  // Salva as avaliações após a criação
 
         // Associando a avaliação ao usuário
         for (User user : users) {
             if (user.id.equals(userId)) {
-                user.reviewIds.add(newId);
-                updateUser(user); // Atualiza o usuário com a nova avaliação
+                user.reviewIds.add(newId);  // Associa a avaliação ao usuário
+                updateUser(user);  // Atualiza o usuário
                 break;
             }
         }
     }
+
 
     // Metodo para salvar a lista de jogos no SharedPreferences
     private static void saveGames() {
         String json = new Gson().toJson(games);
         sharedPrefs.edit().putString("saved_games", json).apply();
     }
+
+    public static void updateReview(Review updatedReview) {
+        for (int i = 0; i < reviews.size(); i++) {
+            if (reviews.get(i).id.equals(updatedReview.id)) {
+                reviews.set(i, updatedReview);  // Atualiza a avaliação
+                saveReviews();  // Salva as avaliações após a atualização
+                break;
+            }
+        }
+    }
+
 
 }

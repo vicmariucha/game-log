@@ -8,6 +8,33 @@
     android:padding="32dp"
     android:background="@drawable/gradient_background"> <!-- Aplicando o gradiente como fundo -->
 
+    <!-- Texto "GameLog" -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="32dp"> <!-- Adicionando margem inferior para espaçamento -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="GameLog"
+            android:textColor="#F4F4F4"
+            android:textSize="40sp"
+            android:fontFamily="@font/montserrat_extrabold"/>
+
+        <ImageView
+            android:src="@drawable/logo"
+            android:layout_width="54dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp" />
+
+    </LinearLayout>
+
+    <!-- Botão Login -->
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
@@ -15,10 +42,12 @@
         android:text="Login"
         android:background="@drawable/button_login"
         android:textColor="#FFFEFE"
-        android:textSize="16sp"
-        android:fontFamily="@font/montserrat_semibold"
-        android:layout_marginBottom="16dp" /> <!-- Adicionando uma margem para o espaçamento -->
+        android:textSize="24sp"
+        android:fontFamily="@font/montserrat_extrabold"
+        android:layout_marginBottom="16dp"
+        android:textAllCaps="false"/>
 
+    <!-- Botão Cadastrar -->
     <Button
         android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
@@ -26,7 +55,8 @@
         android:text="Cadastrar"
         android:background="@drawable/button_signup"
         android:textColor="#9284C9"
-        android:textSize="16sp"
-        android:fontFamily="@font/montserrat_semibold" />
+        android:textSize="24sp"
+        android:fontFamily="@font/montserrat_extrabold"
+        android:textAllCaps="false"/>
 
 </LinearLayout>

@@ -104,11 +104,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/button_login"
+                android:background="@drawable/button_secondary"
                 android:fontFamily="@font/montserrat_extrabold"
                 android:text="Entrar"
                 android:textColor="#FFFEFE"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textAllCaps="false"/>
 
             <!-- Link para o cadastro -->
             <TextView
