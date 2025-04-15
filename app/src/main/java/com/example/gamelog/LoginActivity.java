@@ -27,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        DataHelper.init(getApplicationContext());
 
         // Inicialização dos componentes da interface
         editEmail = findViewById(R.id.editEmail);
@@ -65,15 +66,18 @@ public class LoginActivity extends AppCompatActivity {
             Log.d("LoginActivity", "Email: " + email);
             Log.d("LoginActivity", "Senha: " + senha);
 
-            // Verificação (simulada) de credenciais
-            if (checkUserCredentials(email, senha)) {
+            // Verificação com usuários reais do DataHelper
+            if (DataHelper.login(email, senha)) {
+                DataHelper.User usuarioAtual = DataHelper.getCurrentUser();
+
                 Intent intent = new Intent(LoginActivity.this, PerfilActivity.class);
-                intent.putExtra("nomeUsuario", "Usuário Teste"); // Substitua com nome real futuramente
+                intent.putExtra("nomeUsuario", usuarioAtual.name); // envia nome real
                 startActivity(intent);
                 finish();
             } else {
                 Toast.makeText(LoginActivity.this, "Email ou senha incorretos", Toast.LENGTH_SHORT).show();
             }
+
         });
 
         // Ação ao clicar na seta de voltar
