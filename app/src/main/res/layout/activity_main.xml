@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="16dp"
-    android:background="@color/background">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="GameLog"
-        android:textSize="24sp"
-        android:textColor="@color/primary"
-        android:layout_marginBottom="32dp"/>
+    android:padding="32dp"
+    android:background="@drawable/gradient_background"> <!-- Aplicando o gradiente como fundo -->
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:text="Login"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/primary"/>
+        android:background="@drawable/button_login"
+        android:textColor="#FFFEFE"
+        android:textSize="16sp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:layout_marginBottom="16dp" /> <!-- Adicionando uma margem para o espaçamento -->
 
     <Button
         android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Cadastrar-se"
-        android:backgroundTint="@color/secondary"/>
+        android:layout_height="56dp"
+        android:text="Cadastrar"
+        android:background="@drawable/button_signup"
+        android:textColor="#9284C9"
+        android:textSize="16sp"
+        android:fontFamily="@font/montserrat_semibold" />
+
 </LinearLayout>

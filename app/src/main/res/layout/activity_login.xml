@@ -1,61 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="@color/background">
+    android:background="@drawable/gradient_background">
 
-    <LinearLayout
+    <!-- Ícone de seta para voltar, fixo no topo -->
+    <ImageView
+        android:id="@+id/btnVoltar"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_arrow_back"
+        android:tint="#D9D9D9"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_gravity="start"
+        android:contentDescription="Voltar"
+        android:clickable="true"
+        android:focusable="true"
+        android:elevation="8dp"
+        />
+
+    <!-- ScrollView com padding top para não cobrir a seta -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:paddingStart="16dp"
+        android:paddingTop="80dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp">
 
-        <!-- Título Login -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Login"
-            android:textSize="24sp"
-            android:textColor="@color/primary"
-            android:layout_marginBottom="24dp"/>
-
-        <!-- Campo Email -->
-        <EditText
-            android:id="@+id/editEmail"
+        <!-- Quadrado da frente com campos de login -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginTop="120dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/background_rounded"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="32dp">
 
-        <!-- Campo Senha -->
-        <EditText
-            android:id="@+id/editSenha"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Senha"
-            android:inputType="textPassword"
-            android:layout_marginBottom="24dp"/>
+            <!-- Título do login -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="Login"
+                android:textColor="#1F1877"
+                android:textSize="40sp"
+                android:textStyle="bold" />
 
-        <!-- Botão Login -->
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Entrar"
-            android:backgroundTint="@color/primary"
-            android:layout_marginBottom="16dp"/>
+            <!-- Email -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="16dp"
+                android:text="Email"
+                android:textColor="#1F1877"
+                android:textSize="20sp" />
 
-        <!-- Link para Cadastro -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Não tem conta? Cadastre-se"
-            android:textColor="@color/primary"
-            android:layout_gravity="center_horizontal"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="navigateToSignUp"
-            android:foreground="?attr/selectableItemBackground"/>
-    </LinearLayout>
-</ScrollView>
+            <EditText
+                android:id="@+id/editEmail"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/edittext_background"
+                android:fontFamily="@font/montserrat_regular"
+                android:hint="Digite seu email"
+                android:inputType="textEmailAddress"
+                android:padding="16dp"
+                android:textColor="#1F1877"
+                android:textSize="16sp" />
+
+            <!-- Senha -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="16dp"
+                android:text="Senha"
+                android:textColor="#1F1877"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/editSenha"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/edittext_background"
+                android:fontFamily="@font/montserrat_regular"
+                android:hint="Digite sua senha"
+                android:inputType="textPassword"
+                android:padding="16dp"
+                android:textColor="#1F1877"
+                android:textSize="16sp" />
+
+            <!-- Botão de Login -->
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/button_login"
+                android:fontFamily="@font/montserrat_extrabold"
+                android:text="Entrar"
+                android:textColor="#FFFEFE"
+                android:textSize="24sp" />
+
+            <!-- Link para o cadastro -->
+            <TextView
+                android:id="@+id/txtCadastro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/montserrat_medium"
+                android:foreground="?attr/selectableItemBackground"
+                android:onClick="navigateToSignUp"
+                android:text="Não tem uma conta? Cadastre-se"
+                android:textColor="#1F1877"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Mascote no canto superior direito -->
+    <ImageView
+        android:id="@+id/mascoteImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/mascote"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="130dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="Mascote do projeto"
+        android:tint="#D9D9D9"
+        />
+</FrameLayout>
