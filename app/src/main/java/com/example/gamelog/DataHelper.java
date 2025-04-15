@@ -33,6 +33,26 @@ public class DataHelper {
             this.password = password;
             this.reviewIds = new ArrayList<>();
         }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public List<String> getReviewIds() {
+            return reviewIds;
+        }
+
+        public void setReviewIds(List<String> reviewIds) {
+            this.reviewIds = reviewIds;
+        }
     }
 
     public static class Game {
@@ -75,14 +95,20 @@ public class DataHelper {
     public static void init(Context context) {
         if (sharedPrefs == null) {
             sharedPrefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-            loadSampleData();
-            loadSavedUsers();
-            loadSavedReviews();
-            restoreCurrentUser();
         }
+
+        loadSampleGames();
+        loadSavedUsers();
+        loadSavedReviews();
+
+        if (users.isEmpty()) {
+            loadSampleUsersAndReviews();
+        }
+
+        restoreCurrentUser();
     }
 
-    private static void loadSampleData() {
+    private static void loadSampleGames() {
         if (!games.isEmpty()) return;
 
         games = Arrays.asList(
@@ -107,34 +133,34 @@ public class DataHelper {
                 new Game("g19", "Counter-Strike", "18+", "FPS"),
                 new Game("g20", "Hogwarts Legacy", "12+", "RPG")
         );
+    }
 
-        if (users.isEmpty()) {
-            users = new ArrayList<>(Arrays.asList(
-                    new User("u1", "João Silva", "joao@email.com", "Senha123"),
-                    new User("u2", "Maria Souza", "maria@email.com", "Senha123"),
-                    new User("u3", "Carlos Oliveira", "carlos@email.com", "Senha123"),
-                    new User("u4", "Ana Pereira", "ana@email.com", "Senha123")
-            ));
+    private static void loadSampleUsersAndReviews() {
+        users = new ArrayList<>(Arrays.asList(
+                new User("u1", "João Silva", "joao@email.com", "Senha123"),
+                new User("u2", "Maria Souza", "maria@email.com", "Senha123"),
+                new User("u3", "Carlos Oliveira", "carlos@email.com", "Senha123"),
+                new User("u4", "Ana Pereira", "ana@email.com", "Senha123")
+        ));
 
-            reviews = new ArrayList<>(Arrays.asList(
-                    new Review("r1", "u1", "g1", 5, "Melhor RPG já feito!"),
-                    new Review("r2", "u1", "g5", 4, "Gráficos incríveis"),
-                    new Review("r3", "u2", "g3", 5, "Jogo relaxante"),
-                    new Review("r4", "u2", "g7", 3, "Viciante mas repetitivo"),
-                    new Review("r5", "u3", "g10", 4, "Ótimo com amigos"),
-                    new Review("r6", "u3", "g15", 5, "Competitivo excelente"),
-                    new Review("r7", "u4", "g2", 2, "Poucas novidades"),
-                    new Review("r8", "u4", "g20", 5, "Todo fã deve jogar")
-            ));
+        reviews = new ArrayList<>(Arrays.asList(
+                new Review("r1", "u1", "g1", 5, "Melhor RPG já feito!"),
+                new Review("r2", "u1", "g5", 4, "Gráficos incríveis"),
+                new Review("r3", "u2", "g3", 5, "Jogo relaxante"),
+                new Review("r4", "u2", "g7", 3, "Viciante mas repetitivo"),
+                new Review("r5", "u3", "g10", 4, "Ótimo com amigos"),
+                new Review("r6", "u3", "g15", 5, "Competitivo excelente"),
+                new Review("r7", "u4", "g2", 2, "Poucas novidades"),
+                new Review("r8", "u4", "g20", 5, "Todo fã deve jogar")
+        ));
 
-            users.get(0).reviewIds.addAll(Arrays.asList("r1", "r2"));
-            users.get(1).reviewIds.addAll(Arrays.asList("r3", "r4"));
-            users.get(2).reviewIds.addAll(Arrays.asList("r5", "r6"));
-            users.get(3).reviewIds.addAll(Arrays.asList("r7", "r8"));
+        users.get(0).reviewIds.addAll(Arrays.asList("r1", "r2"));
+        users.get(1).reviewIds.addAll(Arrays.asList("r3", "r4"));
+        users.get(2).reviewIds.addAll(Arrays.asList("r5", "r6"));
+        users.get(3).reviewIds.addAll(Arrays.asList("r7", "r8"));
 
-            saveUsers();
-            saveReviews();
-        }
+        saveUsers();
+        saveReviews();
     }
 
     private static void loadSavedUsers() {
@@ -241,39 +267,69 @@ public class DataHelper {
         return null;
     }
 
-    public static void addReview(String userId, String gameId, int rating, String comment) {
-        String reviewId = "r" + (reviews.size() + 1);
-        Review newReview = new Review(reviewId, userId, gameId, rating, comment);
-        reviews.add(newReview);
-
-        for (User user : users) {
-            if (user.id.equals(userId)) {
-                user.reviewIds.add(reviewId);
-                break;
-            }
-        }
-
-        saveUsers();
-        saveReviews();
-    }
-
     private static boolean userExists(String email) {
         for (User user : users) {
-            if (user.email.equalsIgnoreCase(email.trim())) {
+            if (user.email.equalsIgnoreCase(email)) {
                 return true;
             }
         }
         return false;
     }
 
-    // Metodo updateUser adicionado
     public static void updateUser(User updatedUser) {
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).id.equals(updatedUser.id)) {
                 users.set(i, updatedUser);
+                saveUsers();
                 break;
             }
         }
-        saveUsers();
+        // Atualiza o currentUser se for o mesmo
+        if (currentUser != null && currentUser.id.equals(updatedUser.id)) {
+            currentUser = updatedUser;
+        }
     }
+
+    // Método para encontrar um jogo pelo nome
+    public static Game getGameByName(String name) {
+        for (Game game : games) {
+            if (game.name.equalsIgnoreCase(name)) {
+                return game;
+            }
+        }
+        return null; // Retorna null caso o jogo não seja encontrado
+    }
+
+    // Método para criar um novo jogo
+    public static Game createGame(String name) {
+        String newId = "g" + (games.size() + 1);
+        Game newGame = new Game(newId, name, "L", "Desconhecido"); // Criando um jogo com dados padrão
+        games.add(newGame);
+        saveGames(); // Salva os jogos após a criação
+        return newGame;
+    }
+
+    // Método para criar uma nova avaliação
+    public static void createReview(String userId, String gameId, float rating, String comment) {
+        String newId = "r" + (reviews.size() + 1);
+        Review newReview = new Review(newId, userId, gameId, (int) rating, comment);
+        reviews.add(newReview);
+        saveReviews(); // Salva as avaliações após a criação
+
+        // Associando a avaliação ao usuário
+        for (User user : users) {
+            if (user.id.equals(userId)) {
+                user.reviewIds.add(newId);
+                updateUser(user); // Atualiza o usuário com a nova avaliação
+                break;
+            }
+        }
+    }
+
+    // Metodo para salvar a lista de jogos no SharedPreferences
+    private static void saveGames() {
+        String json = new Gson().toJson(games);
+        sharedPrefs.edit().putString("saved_games", json).apply();
+    }
+
 }

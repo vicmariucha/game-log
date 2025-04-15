@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
             if (DataHelper.login(email, senha)) {
                 DataHelper.User usuarioAtual = DataHelper.getCurrentUser();
 
-                Intent intent = new Intent(LoginActivity.this, PerfilActivity.class);
+                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 intent.putExtra("nomeUsuario", usuarioAtual.name); // envia nome real
                 startActivity(intent);
                 finish();
