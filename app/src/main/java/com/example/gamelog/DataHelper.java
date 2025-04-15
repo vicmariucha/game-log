@@ -2,9 +2,10 @@ package com.example.gamelog;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Patterns;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,9 +16,9 @@ public class DataHelper {
     private static SharedPreferences sharedPrefs;
     private static final String PREFS_NAME = "GameLogData";
     private static final String KEY_USERS = "saved_users";
+    private static final String KEY_REVIEWS = "saved_reviews";
     private static final String KEY_CURRENT_USER = "current_user_id";
 
-    // Modelos de dados
     public static class User {
         public String id;
         public String name;
@@ -66,22 +67,24 @@ public class DataHelper {
         }
     }
 
-    // Dados em memória
     private static List<Game> games = new ArrayList<>();
     private static List<Review> reviews = new ArrayList<>();
-    private static List<User> users = new ArrayList<>();  // Modificado para ser uma ArrayList
+    private static List<User> users = new ArrayList<>();
     private static User currentUser = null;
 
     public static void init(Context context) {
-        sharedPrefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        loadSampleData();
-        loadSavedUsers();
+        if (sharedPrefs == null) {
+            sharedPrefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+            loadSampleData();
+            loadSavedUsers();
+            loadSavedReviews();
+            restoreCurrentUser();
+        }
     }
 
     private static void loadSampleData() {
         if (!games.isEmpty()) return;
 
-        // 20 jogos pré-cadastrados
         games = Arrays.asList(
                 new Game("g1", "The Witcher 3", "18+", "RPG"),
                 new Game("g2", "FIFA 23", "L", "Esporte"),
@@ -105,73 +108,88 @@ public class DataHelper {
                 new Game("g20", "Hogwarts Legacy", "12+", "RPG")
         );
 
-        // 4 usuários iniciais (senha: Senha123)
-        users = new ArrayList<>(Arrays.asList(  // Modificado para usar ArrayList
-                new User("u1", "João Silva", "joao@email.com", "Senha123"),
-                new User("u2", "Maria Souza", "maria@email.com", "Senha123"),
-                new User("u3", "Carlos Oliveira", "carlos@email.com", "Senha123"),
-                new User("u4", "Ana Pereira", "ana@email.com", "Senha123")
-        ));
+        if (users.isEmpty()) {
+            users = new ArrayList<>(Arrays.asList(
+                    new User("u1", "João Silva", "joao@email.com", "Senha123"),
+                    new User("u2", "Maria Souza", "maria@email.com", "Senha123"),
+                    new User("u3", "Carlos Oliveira", "carlos@email.com", "Senha123"),
+                    new User("u4", "Ana Pereira", "ana@email.com", "Senha123")
+            ));
 
-        // 8 avaliações (2 por usuário)
-        reviews = Arrays.asList(
-                new Review("r1", "u1", "g1", 5, "Melhor RPG já feito!"),
-                new Review("r2", "u1", "g5", 4, "Gráficos incríveis"),
-                new Review("r3", "u2", "g3", 5, "Jogo relaxante"),
-                new Review("r4", "u2", "g7", 3, "Viciante mas repetitivo"),
-                new Review("r5", "u3", "g10", 4, "Ótimo com amigos"),
-                new Review("r6", "u3", "g15", 5, "Competitivo excelente"),
-                new Review("r7", "u4", "g2", 2, "Poucas novidades"),
-                new Review("r8", "u4", "g20", 5, "Todo fã deve jogar")
-        );
+            reviews = new ArrayList<>(Arrays.asList(
+                    new Review("r1", "u1", "g1", 5, "Melhor RPG já feito!"),
+                    new Review("r2", "u1", "g5", 4, "Gráficos incríveis"),
+                    new Review("r3", "u2", "g3", 5, "Jogo relaxante"),
+                    new Review("r4", "u2", "g7", 3, "Viciante mas repetitivo"),
+                    new Review("r5", "u3", "g10", 4, "Ótimo com amigos"),
+                    new Review("r6", "u3", "g15", 5, "Competitivo excelente"),
+                    new Review("r7", "u4", "g2", 2, "Poucas novidades"),
+                    new Review("r8", "u4", "g20", 5, "Todo fã deve jogar")
+            ));
 
-        // Vincula reviews aos usuários
-        users.get(0).reviewIds.add("r1");
-        users.get(0).reviewIds.add("r2");
-        users.get(1).reviewIds.add("r3");
-        users.get(1).reviewIds.add("r4");
-        users.get(2).reviewIds.add("r5");
-        users.get(2).reviewIds.add("r6");
-        users.get(3).reviewIds.add("r7");
-        users.get(3).reviewIds.add("r8");
+            users.get(0).reviewIds.addAll(Arrays.asList("r1", "r2"));
+            users.get(1).reviewIds.addAll(Arrays.asList("r3", "r4"));
+            users.get(2).reviewIds.addAll(Arrays.asList("r5", "r6"));
+            users.get(3).reviewIds.addAll(Arrays.asList("r7", "r8"));
+
+            saveUsers();
+            saveReviews();
+        }
     }
 
     private static void loadSavedUsers() {
         String json = sharedPrefs.getString(KEY_USERS, null);
         if (json != null) {
-            Type type = new TypeToken<List<User>>(){}.getType();
+            Type type = new TypeToken<List<User>>() {}.getType();
             List<User> savedUsers = new Gson().fromJson(json, type);
             if (savedUsers != null) {
-                // Mantém usuários originais e adiciona os salvos
-                for (User savedUser : savedUsers) {
-                    if (!userExists(savedUser.email)) {
-                        users.add(savedUser);
+                users.clear();
+                for (User user : savedUsers) {
+                    if (user.reviewIds == null) {
+                        user.reviewIds = new ArrayList<>();
                     }
+                    users.add(user);
                 }
             }
         }
     }
 
-    private static boolean userExists(String email) {
-        for (User user : users) {
-            if (user.email.equalsIgnoreCase(email)) {
-                return true;
+    private static void loadSavedReviews() {
+        String json = sharedPrefs.getString(KEY_REVIEWS, null);
+        if (json != null) {
+            Type type = new TypeToken<List<Review>>() {}.getType();
+            List<Review> savedReviews = new Gson().fromJson(json, type);
+            if (savedReviews != null) {
+                reviews.clear();
+                reviews.addAll(savedReviews);
             }
         }
-        return false;
+    }
+
+    private static void restoreCurrentUser() {
+        String userId = sharedPrefs.getString(KEY_CURRENT_USER, null);
+        if (userId != null) {
+            for (User user : users) {
+                if (user.id.equals(userId)) {
+                    currentUser = user;
+                    break;
+                }
+            }
+        }
     }
 
     private static void saveUsers() {
-        List<User> usersToSave = new ArrayList<>(users);
-        String json = new Gson().toJson(usersToSave);
+        String json = new Gson().toJson(users);
         sharedPrefs.edit().putString(KEY_USERS, json).apply();
     }
 
-    // Métodos de autenticação
+    private static void saveReviews() {
+        String json = new Gson().toJson(reviews);
+        sharedPrefs.edit().putString(KEY_REVIEWS, json).apply();
+    }
+
     public static boolean registerUser(String name, String email, String password) {
-        if (userExists(email)) {
-            return false;
-        }
+        if (userExists(email)) return false;
 
         String newId = "u" + (users.size() + 1);
         User newUser = new User(newId, name, email, password);
@@ -182,7 +200,7 @@ public class DataHelper {
 
     public static boolean login(String email, String password) {
         for (User user : users) {
-            if (user.email.equals(email) && user.password.equals(password)) {
+            if (user.email.equalsIgnoreCase(email.trim()) && user.password.equals(password.trim())) {
                 currentUser = user;
                 sharedPrefs.edit().putString(KEY_CURRENT_USER, user.id).apply();
                 return true;
@@ -196,19 +214,7 @@ public class DataHelper {
         sharedPrefs.edit().remove(KEY_CURRENT_USER).apply();
     }
 
-    // Getters
     public static User getCurrentUser() {
-        if (currentUser == null) {
-            String userId = sharedPrefs.getString(KEY_CURRENT_USER, null);
-            if (userId != null) {
-                for (User user : users) {
-                    if (user.id.equals(userId)) {
-                        currentUser = user;
-                        break;
-                    }
-                }
-            }
-        }
         return currentUser;
     }
 
@@ -233,5 +239,41 @@ public class DataHelper {
             }
         }
         return null;
+    }
+
+    public static void addReview(String userId, String gameId, int rating, String comment) {
+        String reviewId = "r" + (reviews.size() + 1);
+        Review newReview = new Review(reviewId, userId, gameId, rating, comment);
+        reviews.add(newReview);
+
+        for (User user : users) {
+            if (user.id.equals(userId)) {
+                user.reviewIds.add(reviewId);
+                break;
+            }
+        }
+
+        saveUsers();
+        saveReviews();
+    }
+
+    private static boolean userExists(String email) {
+        for (User user : users) {
+            if (user.email.equalsIgnoreCase(email.trim())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Metodo updateUser adicionado
+    public static void updateUser(User updatedUser) {
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).id.equals(updatedUser.id)) {
+                users.set(i, updatedUser);
+                break;
+            }
+        }
+        saveUsers();
     }
 }
