@@ -1,14 +1,19 @@
 package com.example.gamelog;
 
+import android.util.Log;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.Patterns;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import android.util.Patterns;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -24,8 +29,21 @@ public class SignUpActivity extends AppCompatActivity {
         EditText editNome = findViewById(R.id.editNome);
         EditText editEmail = findViewById(R.id.editEmail);
         EditText editSenha = findViewById(R.id.editSenha);
-        EditText editConfirmaSenha = findViewById(R.id.editConfirmaSenha);
+        EditText editConfirmaSenha = findViewById(R.id.editConfirmarSenha);
         Button btnCadastrar = findViewById(R.id.btnCadastrar);
+        ImageView btnVoltar = findViewById(R.id.btnVoltar);
+        TextView txtLogin = findViewById(R.id.tvLogin);
+
+        // Aplicar o negrito ao texto "Faça login"
+        String texto = "Já tem uma conta? Faça login";
+        SpannableString spannable = new SpannableString(texto);
+        spannable.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), texto.indexOf("Faça login"), texto.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // Definir o texto no TextView
+        txtLogin.setText(spannable);
+
+        // Configuração do botão de voltar
+        btnVoltar.setOnClickListener(v -> onBackPressed()); // Função para voltar à tela de login
 
         btnCadastrar.setOnClickListener(v -> {
             String nome = editNome.getText().toString().trim();
