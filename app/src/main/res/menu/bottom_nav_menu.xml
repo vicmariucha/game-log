@@ -1,15 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_buscar"
-        android:icon="@android:drawable/ic_menu_search"
-        android:title="Buscar" />
+        android:icon="@drawable/ic_search" />
     <item
         android:id="@+id/nav_home"
-        android:icon="@android:drawable/ic_menu_view"
-        android:title="Home" />
+        android:icon="@drawable/ic_home" />
     <item
         android:id="@+id/nav_config"
-        android:icon="@android:drawable/ic_menu_manage"
-        android:title="Configurações" />
+        android:icon="@drawable/ic_settings" />
 </menu>

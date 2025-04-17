@@ -1,51 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/homeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    android:padding="16dp">
+    android:background="@drawable/gradient_background">
 
-    <!-- Texto de boas-vindas -->
-    <TextView
-        android:id="@+id/txtWelcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textColor="@color/text_primary"
-        android:text="Bem-vindo!"
-        android:layout_alignParentTop="true" />
-
-    <!-- Lista de Avaliações -->
-    <ListView
-        android:id="@+id/listReviews"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_below="@id/txtWelcome"
-        android:layout_above="@id/btnNovaAvaliacao"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_marginBottom="100dp">
 
-    <!-- Botão para adicionar nova avaliação -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <!-- Texto de boas-vindas -->
+        <TextView
+            android:id="@+id/txtWelcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:textColor="#D9D9D9"
+            android:text="Bem-vindo!"
+            android:fontFamily="@font/montserrat_extrabold" />
+
+        <!-- Container branco arredondado para avaliações -->
+        <LinearLayout
+            android:id="@+id/reviewContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/background_rounded"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Lista de Avaliações -->
+            <ListView
+                android:id="@+id/listReviews"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@android:color/darker_gray"
+                android:dividerHeight="1dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Botão de avaliação central flutuante -->
+    <ImageButton
         android:id="@+id/btnNovaAvaliacao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="80dp"
-        android:layout_alignParentBottom="true"
-        android:contentDescription="Nova Avaliação"
-        app:srcCompat="@android:drawable/ic_input_add"
-        app:backgroundTint="@color/secondary" />
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="100dp"
+        android:background="@drawable/rounded_button_background"
+        android:padding="12dp"
+        android:src="@drawable/ic_add"
+        android:tint="#3025B7"
+        android:contentDescription="Nova Avaliação" />
 
-    <!-- Barra de navegação inferior -->
+    <!-- Barra de navegação inferior oficial -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/nav_background"
+        android:layout_height="65dp"
+        android:layout_gravity="bottom"
+        android:background="#D9D9D9"
         app:menu="@menu/bottom_nav_menu"
-        app:itemIconTint="@color/primary"
-        app:itemTextColor="@color/primary" />
-</RelativeLayout>
+        app:itemIconTint="@color/nav_item_color"
+        app:itemTextColor="@color/nav_item_color"
+        />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#6200EE</color>
+    <color name="primary">#3025B7</color>
     <color name="primary_dark">#3700B3</color>
     <color name="secondary">#03DAC6</color>
     <color name="background">#FAFAFA</color>
@@ -9,5 +9,6 @@
     <color name="purple_500">#6200EE</color>
     <color name="purple_700">#3700B3</color>
     <color name="teal_200">#03DAC5</color>
+    <color name="nav_icon_color">#3025B7</color>
 
 </resources>
