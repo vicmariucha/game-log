@@ -52,16 +52,6 @@ app/
 
 ---
 
-## 🔧 Tecnologias Utilizadas
-
-- Java
-- Android Studio
-- XML (layouts)
-- Figma (design)
-- Fonte Montserrat (tipografia personalizada)
-
----
-
 ## 🧪 Status do projeto
 
 🚧 **Em desenvolvimento**  
