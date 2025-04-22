@@ -91,7 +91,6 @@ public class HomeActivity extends AppCompatActivity {
                     startActivity(new Intent(HomeActivity.this, ConfigActivity.class));
                     return true;
                 } else if (id == R.id.nav_wishlist) {
-                    // Navegar para o WishlistFragment
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, new WishlistFragment())
                             .addToBackStack(null)

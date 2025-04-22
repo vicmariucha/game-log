@@ -1,18 +1,25 @@
 package com.example.gamelog;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,19 +28,21 @@ public class BuscarActivity extends AppCompatActivity {
 
     private ListView listUsuarios;
     private EditText editBusca;
-    private List<String> allUsers;      // Lista completa de usuários simulados
-    private List<String> filteredUsers; // Lista filtrada com base na busca
+    private List<String> allUsers;
+    private List<String> filteredUsers;
+    private BottomNavigationView bottomNavigationView;
+    private ImageButton btnNovaAvaliacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buscar);
 
-        // Inicialização dos componentes de interface
         listUsuarios = findViewById(R.id.listUsuarios);
         editBusca = findViewById(R.id.editBusca);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        btnNovaAvaliacao = findViewById(R.id.btnNovaAvaliacao);
 
-        // Dados simulados
         allUsers = new ArrayList<>();
         allUsers.add("João");
         allUsers.add("Maria");
@@ -41,22 +50,18 @@ public class BuscarActivity extends AppCompatActivity {
         allUsers.add("Ana");
         allUsers.add("Lucas");
 
-        // Inicialmente a lista filtrada contém todos os usuários
         filteredUsers = new ArrayList<>(allUsers);
 
-        // Adaptador customizado para a ListView
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item_usuario, filteredUsers) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item_usuario, filteredUsers) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 if (convertView == null) {
                     convertView = getLayoutInflater().inflate(R.layout.list_item_usuario, parent, false);
                 }
 
-                // Define o nome do usuário no item da lista
                 TextView nomeUsuario = convertView.findViewById(R.id.txtNomeUsuario);
                 nomeUsuario.setText(filteredUsers.get(position));
 
-                // Configura o botão "Ver lista"
                 Button btnVerLista = convertView.findViewById(R.id.btnVerLista);
                 btnVerLista.setOnClickListener(v -> {
                     String nome = filteredUsers.get(position);
@@ -71,10 +76,9 @@ public class BuscarActivity extends AppCompatActivity {
 
         listUsuarios.setAdapter(adapter);
 
-        // Listener para filtrar conforme o usuário digita
         editBusca.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void afterTextChanged(Editable s) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -85,11 +89,56 @@ public class BuscarActivity extends AppCompatActivity {
                         filteredUsers.add(user);
                     }
                 }
-                adapter.notifyDataSetChanged(); // Atualiza a ListView com os resultados filtrados
+                adapter.notifyDataSetChanged();
             }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
         });
+
+        // Clique do botão flutuante
+        btnNovaAvaliacao.setOnClickListener(v -> {
+            Intent intent = new Intent(BuscarActivity.this, NovaAvaliacaoActivity.class);
+            startActivity(intent);
+        });
+
+        // Define o item ativo
+        bottomNavigationView.setSelectedItemId(R.id.nav_buscar);
+
+        // Navegação da navbar inferior
+        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                animateItemClick(item);
+
+                int id = item.getItemId();
+                if (id == R.id.nav_buscar) {
+                    return true; // já está na tela de busca
+                } else if (id == R.id.nav_home) {
+                    startActivity(new Intent(BuscarActivity.this, HomeActivity.class));
+                    finish();
+                    return true;
+                } else if (id == R.id.nav_config) {
+                    startActivity(new Intent(BuscarActivity.this, ConfigActivity.class));
+                    finish();
+                    return true;
+                } else if (id == R.id.nav_wishlist) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, new WishlistFragment())
+                            .addToBackStack(null)
+                            .commit();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    private void animateItemClick(MenuItem item) {
+        if (item.getActionView() != null) {
+            ObjectAnimator scaleX = ObjectAnimator.ofFloat(item.getActionView(), "scaleX", 1f, 1.2f, 1f);
+            ObjectAnimator scaleY = ObjectAnimator.ofFloat(item.getActionView(), "scaleY", 1f, 1.2f, 1f);
+            AnimatorSet animatorSet = new AnimatorSet();
+            animatorSet.playTogether(scaleX, scaleY);
+            animatorSet.setDuration(300);
+            animatorSet.start();
+        }
     }
 }
