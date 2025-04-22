@@ -31,7 +31,8 @@ public class PerfilActivity extends AppCompatActivity {
         btnVoltar = findViewById(R.id.btnVoltar);
 
         // Pega os dados do usuário vindo do Intent
-        userName = getIntent().getStringExtra("userName");
+        userName = getIntent().getStringExtra("nomeUsuario"); // agora bate com a chave da BuscarActivity
+
 
         // Verifica se o nome do usuário não é nulo e atualiza o TextView
         if (userName != null) {

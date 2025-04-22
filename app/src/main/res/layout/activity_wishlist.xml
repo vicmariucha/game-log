@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/gradient_background">
+
+    <!-- Título -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Minha Wishlist"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="#D9D9D9"
+        android:fontFamily="@font/montserrat_bold" />
+
+    <!-- Lista de jogos desejados -->
+    <ListView
+        android:id="@+id/listWishlist"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="#D9D9D9"
+        android:dividerHeight="1dp"
+        android:layout_marginTop="24dp"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent" />
+
+    <!-- Botão flutuante -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnAddWishlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Adicionar jogo à wishlist"
+        app:srcCompat="@android:drawable/ic_input_add"
+        app:backgroundTint="@color/purple_500"
+        app:tint="@android:color/white" />
+</LinearLayout>

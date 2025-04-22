@@ -31,6 +31,8 @@
         <activity android:name=".BuscarActivity" />
         <activity android:name=".ConfigActivity" />
         <activity android:name=".PerfilActivity" />
+        <activity android:name=".WishlistActivity" />
+
 
     </application>
 

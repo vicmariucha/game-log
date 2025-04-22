@@ -16,7 +16,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -118,12 +117,11 @@ public class BuscarActivity extends AppCompatActivity {
                 finish();
                 return true;
             } else if (id == R.id.nav_wishlist) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new WishlistFragment())
-                        .addToBackStack(null)
-                        .commit();
+                startActivity(new Intent(BuscarActivity.this, WishlistActivity.class));
+                finish();
                 return true;
             }
+
             return false;
         });
     }

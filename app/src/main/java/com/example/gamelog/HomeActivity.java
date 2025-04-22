@@ -17,10 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.List;
 
 // IMPORTAÇÕES DAS ACTIVITYS QUE JÁ EXISTEM
-import com.example.gamelog.NovaAvaliacaoActivity;
-import com.example.gamelog.BuscarActivity;
-import com.example.gamelog.ConfigActivity;
-import com.example.gamelog.WishlistFragment; // Importando o novo fragmento
+
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -77,10 +74,8 @@ public class HomeActivity extends AppCompatActivity {
                     startActivity(new Intent(HomeActivity.this, ConfigActivity.class));
                     return true;
                 } else if (id == R.id.nav_wishlist) {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, new WishlistFragment())
-                            .addToBackStack(null)
-                            .commit();
+                    startActivity(new Intent(HomeActivity.this, WishlistActivity.class));
+
                     return true;
                 }
                 return false;
