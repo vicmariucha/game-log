@@ -1,30 +1,101 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@color/background">
+    android:background="@drawable/gradient_background"
+    tools:context=".PerfilActivity">
 
-    <TextView
-        android:id="@+id/textNomeUsuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nome do Usuário"
-        android:textSize="24sp"
-        android:textColor="@color/primary"
-        android:layout_marginBottom="24dp"/>
+    <!-- Ícone de seta para voltar -->
+    <ImageView
+        android:id="@+id/btnVoltar"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_arrow_back"
+        android:tint="#D9D9D9"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_gravity="start"
+        android:contentDescription="Voltar"
+        android:clickable="true"
+        android:focusable="true"
+        android:elevation="8dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Avaliações:"
-        android:textSize="18sp"
-        android:textColor="@color/primary"
-        android:layout_marginBottom="16dp"/>
-
-    <ListView
-        android:id="@+id/listAvaliacoes"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp">
+
+        <!-- Nome do usuário -->
+        <TextView
+            android:id="@+id/txtUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="32sp"
+            android:textColor="#D9D9D9"
+            android:text="Nome do Usuário"
+            android:fontFamily="@font/montserrat_extrabold"
+            android:gravity="center"
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Título para Lista de Avaliações -->
+        <TextView
+            android:id="@+id/txtNomeLista"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Avaliações:"
+            android:textSize="18sp"
+            android:textColor="#D9D9D9"
+            android:fontFamily="@font/montserrat_semibold"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Lista de avaliações -->
+        <ListView
+            android:id="@+id/listUserReviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="#3025B7"
+            android:dividerHeight="3dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/background_rounded"
+            android:elevation="4dp" />
+
+    </LinearLayout>
+
+    <!-- Barra de navegação inferior -->
+    <com.example.gamelog.CurvedBottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="40dp"
+        android:layout_gravity="bottom"
+        android:background="@android:color/transparent"
+        android:elevation="0dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        app:menu="@menu/bottom_nav_menu"
+        app:itemIconTint="@color/nav_item_color"
+        app:itemTextColor="@android:color/transparent"
+        app:itemIconSize="28dp" />
+
+    <!-- Floating Action Button -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnNovaAvaliacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="40dp"
+        android:src="@drawable/ic_add"
+        android:contentDescription="Nova Avaliação"
+        app:fabSize="normal"
+        app:tint="@color/primary"
+        android:backgroundTint="@color/navbar_bg"
+        android:elevation="12dp" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

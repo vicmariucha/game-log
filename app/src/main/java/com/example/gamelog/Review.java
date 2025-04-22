@@ -1,10 +1,10 @@
-import java.util.Date;  // Certifique-se de importar a classe Date
+import java.util.Date;
 
 public class Review {
     public String id;
     public String userId;
     public String gameId;
-    public int rating; // Nota do jogo, de 1 a 5 (ou o sistema que você preferir)
+    public int rating; // Nota do jogo, de 1 a 5
     public String comment; // Comentário da avaliação
     public String date; // Data da avaliação
 

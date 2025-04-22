@@ -66,7 +66,7 @@ public class BuscarActivity extends AppCompatActivity {
                 btnVerLista.setOnClickListener(v -> {
                     String nome = filteredUsers.get(position);
                     Intent intent = new Intent(BuscarActivity.this, PerfilActivity.class);
-                    intent.putExtra("nomeUsuario", nome);
+                    intent.putExtra("nomeUsuario", nome);  // Passando o nome do usuário
                     startActivity(intent);
                 });
 
@@ -103,31 +103,28 @@ public class BuscarActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.nav_buscar);
 
         // Navegação da navbar inferior
-        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                animateItemClick(item);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            animateItemClick(item);
 
-                int id = item.getItemId();
-                if (id == R.id.nav_buscar) {
-                    return true; // já está na tela de busca
-                } else if (id == R.id.nav_home) {
-                    startActivity(new Intent(BuscarActivity.this, HomeActivity.class));
-                    finish();
-                    return true;
-                } else if (id == R.id.nav_config) {
-                    startActivity(new Intent(BuscarActivity.this, ConfigActivity.class));
-                    finish();
-                    return true;
-                } else if (id == R.id.nav_wishlist) {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, new WishlistFragment())
-                            .addToBackStack(null)
-                            .commit();
-                    return true;
-                }
-                return false;
+            int id = item.getItemId();
+            if (id == R.id.nav_buscar) {
+                return true; // já está na tela de busca
+            } else if (id == R.id.nav_home) {
+                startActivity(new Intent(BuscarActivity.this, HomeActivity.class));
+                finish();
+                return true;
+            } else if (id == R.id.nav_config) {
+                startActivity(new Intent(BuscarActivity.this, ConfigActivity.class));
+                finish();
+                return true;
+            } else if (id == R.id.nav_wishlist) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new WishlistFragment())
+                        .addToBackStack(null)
+                        .commit();
+                return true;
             }
+            return false;
         });
     }
 

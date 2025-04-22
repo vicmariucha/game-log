@@ -80,6 +80,13 @@
             android:listSelector="@android:color/transparent" />
     </LinearLayout>
 
+    <!-- FrameLayout para carregar o fragmento -->
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
     <!-- Bottom Navigation -->
     <com.example.gamelog.CurvedBottomNavigationView
         android:id="@+id/bottomNavigationView"

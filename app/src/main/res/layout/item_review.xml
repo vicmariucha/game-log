@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:background="@android:color/transparent">
+
+    <!-- Capa do jogo -->
+    <ImageView
+        android:id="@+id/imgCapaJogo"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:layout_marginEnd="12dp"
+        android:src="@drawable/exemplo_jogo" />
+
+    <!-- Coluna com título, estrelas e comentário -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- Nome do jogo -->
+        <TextView
+            android:id="@+id/txtTituloJogo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nome do Jogo"
+            android:textColor="#3025B7"
+            android:textSize="20sp"
+            android:fontFamily="@font/montserrat_semibold" />
+
+        <!-- Avaliação (estrelas) -->
+        <RatingBar
+            android:id="@+id/ratingEstrelas"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="0.5"
+            android:isIndicator="true"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp" />
+
+        <!-- Comentário -->
+        <TextView
+            android:id="@+id/txtComentario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Comentário do usuário aqui"
+            android:textColor="#3025B7"
+            android:textSize="13sp"
+            android:fontFamily="@font/montserrat_medium" />
+    </LinearLayout>
+</LinearLayout>

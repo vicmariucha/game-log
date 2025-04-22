@@ -112,7 +112,7 @@ public class DataHelper {
         if (!games.isEmpty()) return;
 
         games = Arrays.asList(
-                new Game("g1", "The Witcher 3", "18+", "RPG"),
+                new Game("g1", "Stardew Valley", "L", "Simulação"),
                 new Game("g2", "FIFA 23", "L", "Esporte"),
                 new Game("g3", "Minecraft", "L", "Sandbox"),
                 new Game("g4", "Call of Duty", "16+", "FPS"),
@@ -144,17 +144,21 @@ public class DataHelper {
         ));
 
         reviews = new ArrayList<>(Arrays.asList(
-                new Review("r1", "u1", "g1", 5, "Melhor RPG já feito!"),
+                new Review("r1", "u1", "g13", 5, "Melhor jogo da história!"),
                 new Review("r2", "u1", "g5", 4, "Gráficos incríveis"),
-                new Review("r3", "u2", "g3", 5, "Jogo relaxante"),
+                new Review("r3", "u1", "g3", 5, "Jogo relaxante"),
                 new Review("r4", "u2", "g7", 3, "Viciante mas repetitivo"),
                 new Review("r5", "u3", "g10", 4, "Ótimo com amigos"),
                 new Review("r6", "u3", "g15", 5, "Competitivo excelente"),
                 new Review("r7", "u4", "g2", 2, "Poucas novidades"),
-                new Review("r8", "u4", "g20", 5, "Todo fã deve jogar")
+                new Review("r8", "u1", "g20", 5, "Todo fã deve jogar"),
+                new Review("r9", "u1", "g8", 4, "Ótimo jogo de ação"),
+                new Review("r10", "u1", "g9", 5, "Incrível!"),
+                new Review("r11", "u1", "g1", 3, "Jogo muito bom, mas tem bugs")
         ));
 
-        users.get(0).reviewIds.addAll(Arrays.asList("r1", "r2"));
+
+        users.get(0).reviewIds.addAll(Arrays.asList("r1", "r2", "r3", "r8", "r9", "r10", "r11"));
         users.get(1).reviewIds.addAll(Arrays.asList("r3", "r4"));
         users.get(2).reviewIds.addAll(Arrays.asList("r5", "r6"));
         users.get(3).reviewIds.addAll(Arrays.asList("r7", "r8"));
@@ -290,7 +294,7 @@ public class DataHelper {
         }
     }
 
-    // Método para encontrar um jogo pelo nome
+    // Metodo para encontrar um jogo pelo nome
     public static Game getGameByName(String name) {
         for (Game game : games) {
             if (game.name.equalsIgnoreCase(name)) {
@@ -300,7 +304,7 @@ public class DataHelper {
         return null; // Retorna null caso o jogo não seja encontrado
     }
 
-    // Método para criar um novo jogo
+    // Metodo para criar um novo jogo
     public static Game createGame(String name) {
         String newId = "g" + (games.size() + 1);
         Game newGame = new Game(newId, name, "L", "Desconhecido"); // Criando um jogo com dados padrão

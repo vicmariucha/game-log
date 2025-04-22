@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
->
+    android:background="@drawable/gradient_background">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,17 +17,19 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <!-- Título com o nome do usuário -->
             <TextView
-                android:id="@+id/txtWelcome"
+                android:id="@+id/txtNomeUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_marginTop="50dp"
                 android:textSize="30sp"
                 android:textColor="#D9D9D9"
-                android:text="Bem-vindo!"
+                android:text="Lista de XXX"
                 android:fontFamily="@font/montserrat_extrabold" />
 
+            <!-- Container da lista de avaliações do usuário -->
             <LinearLayout
                 android:id="@+id/reviewContainer"
                 android:layout_width="match_parent"
@@ -40,7 +41,7 @@
                 android:padding="24dp">
 
                 <ListView
-                    android:id="@+id/listReviews"
+                    android:id="@+id/listAvaliacoes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:divider="#3025B7"
@@ -51,28 +52,21 @@
         </LinearLayout>
     </ScrollView>
 
-<com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:id="@+id/btnNovaAvaliacao"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="bottom|center"
-    android:layout_marginBottom="40dp"
-    android:src="@drawable/ic_add"
-    android:contentDescription="Nova Avaliação"
-    app:fabSize="normal"
-    app:tint="@color/primary"
-    android:backgroundTint="@color/navbar_bg"
-    android:elevation="12dp" />
+    <!-- Botão flutuante de nova avaliação -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnNovaAvaliacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="40dp"
+        android:src="@drawable/ic_add"
+        android:contentDescription="Nova Avaliação"
+        app:fabSize="normal"
+        app:tint="@color/primary"
+        android:backgroundTint="@color/navbar_bg"
+        android:elevation="12dp" />
 
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="16dp"
-        android:name="com.example.gamelog.WishlistFragment" />
-
+    <!-- Barra de navegação inferior -->
     <com.example.gamelog.CurvedBottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"

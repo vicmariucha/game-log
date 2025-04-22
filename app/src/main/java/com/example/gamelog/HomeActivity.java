@@ -5,7 +5,6 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 // IMPORTAÇÕES DAS ACTIVITYS QUE JÁ EXISTEM
@@ -26,8 +24,8 @@ import com.example.gamelog.WishlistFragment; // Importando o novo fragmento
 
 public class HomeActivity extends AppCompatActivity {
 
-    private TextView txtWelcome;
-    private ListView listReviews;
+    private TextView txtNomeUsuario;  // Atualizado o nome da variável
+    private ListView listAvaliacoes;  // Atualizado o nome da variável
     private ImageButton btnNovaAvaliacao;
     private BottomNavigationView bottomNavigationView;
 
@@ -39,30 +37,18 @@ public class HomeActivity extends AppCompatActivity {
         DataHelper.init(this);
         DataHelper.User user = DataHelper.getCurrentUser();
 
-        txtWelcome = findViewById(R.id.txtWelcome);
-        listReviews = findViewById(R.id.listReviews);
+        // Atualizando os findViewById com os IDs corretos
+        txtNomeUsuario = findViewById(R.id.txtNomeUsuario);  // Alterado
+        listAvaliacoes = findViewById(R.id.listAvaliacoes);  // Alterado
         btnNovaAvaliacao = findViewById(R.id.btnNovaAvaliacao);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
         if (user != null) {
-            txtWelcome.setText("Bem-vindo, " + user.name);
+            txtNomeUsuario.setText("Bem-vindo, " + user.name);
 
             List<DataHelper.Review> reviews = DataHelper.getUserReviews(user.id);
-            List<String> reviewItems = new ArrayList<>();
-
-            for (DataHelper.Review review : reviews) {
-                DataHelper.Game game = DataHelper.getGameById(review.gameId);
-                if (game != null) {
-                    reviewItems.add(game.name + " - " + review.rating + "★: " + review.comment);
-                }
-            }
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                    this,
-                    android.R.layout.simple_list_item_1,
-                    reviewItems
-            );
-            listReviews.setAdapter(adapter);
+            ReviewAdapter adapter = new ReviewAdapter(this, reviews);
+            listAvaliacoes.setAdapter(adapter);
         }
 
         // Botão para adicionar avaliação
