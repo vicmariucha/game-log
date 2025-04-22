@@ -1,59 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="@color/background">
+    android:background="@drawable/gradient_background">
 
-    <LinearLayout
+    <!-- Ícone de seta para voltar, fixo no topo -->
+    <ImageView
+        android:id="@+id/btnVoltar"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_arrow_back"
+        android:tint="#D9D9D9"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_gravity="start"
+        android:contentDescription="Voltar"
+        android:clickable="true"
+        android:focusable="true"
+        android:elevation="8dp"
+        />
+
+    <!-- ScrollView com padding top para não cobrir a seta -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:paddingStart="16dp"
+        android:paddingTop="80dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nova Avaliacao"
-            android:textSize="24sp"
-            android:textColor="@color/primary"
-            android:layout_marginBottom="24dp"/>
-
-        <EditText
-            android:id="@+id/editTitulo"
+        <!-- Quadrado da frente com campos de avaliação -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Título da avaliacao"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginTop="60dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/background_rounded"
+            android:elevation="4dp"
+            android:orientation="vertical"
+            android:padding="32dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Avaliacao:"
-            android:layout_marginBottom="8dp"/>
+            <!-- Título da tela -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Nova avaliação"
+                android:textColor="#3025B7"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:gravity="center"/>
 
-        <RatingBar
-            android:id="@+id/ratingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:numStars="5"
-            android:stepSize="1"
-            android:rating="3"
-            android:layout_marginBottom="16dp"/>
+            <!-- Título da avaliação -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="Título da avaliação"
+                android:textColor="#3025B7"
+                android:textSize="20sp"
+                android:fontFamily="@font/montserrat_medium"
+                android:gravity="start" />
 
-        <EditText
-            android:id="@+id/editDescricao"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:hint="Descricao detalhada"
-            android:gravity="top"
-            android:inputType="textMultiLine"
-            android:layout_marginBottom="24dp"/>
+            <EditText
+                android:id="@+id/editTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Digite o título"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/edittext_background"
+                android:textColor="#3025B7"
+                android:textSize="18sp"
+                android:fontFamily="@font/montserrat_regular"
+                android:padding="16dp"/>
 
-        <Button
-            android:id="@+id/btnSalvar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Salvar Avaliacao"
-            android:backgroundTint="@color/primary"/>
-    </LinearLayout>
-</ScrollView>
+            <!-- Texto "Avaliação:" -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Avaliação:"
+                android:textColor="#3025B7"
+                android:textSize="20sp"
+                android:fontFamily="@font/montserrat_medium"
+                android:gravity="start" />
+
+            <!-- RatingBar para a avaliação -->
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:stepSize="1"
+                android:rating="3"
+                android:layout_marginBottom="16dp"
+                android:layout_gravity="start"
+                android:tint="#3025B7"
+                />
+
+            <!-- Texto "Descrição detalhada" -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Descrição detalhada"
+                android:textColor="#3025B7"
+                android:textSize="20sp"
+                android:fontFamily="@font/montserrat_medium"
+                android:gravity="start" />
+
+            <EditText
+                android:id="@+id/editDescricao"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:hint="Digite a descrição detalhada"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/edittext_background"
+                android:textColor="#3025B7"
+                android:textSize="18sp"
+                android:fontFamily="@font/montserrat_regular"
+                android:padding="16dp"/>
+
+            <!-- Botão "Salvar Avaliação" -->
+            <Button
+                android:id="@+id/btnSalvar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Salvar avaliação"
+                android:textColor="#FFFEFE"
+                android:textSize="24sp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/button_secondary"
+                android:fontFamily="@font/montserrat_extrabold"
+                android:textAllCaps="false"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Mascote no canto superior direito -->
+    <ImageView
+        android:id="@+id/mascoteImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/mascote"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="Mascote do projeto"
+        android:tint="#D9D9D9"
+        />
+</FrameLayout>
