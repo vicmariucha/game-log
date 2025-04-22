@@ -38,12 +38,11 @@ public class NovaAvaliacaoActivity extends AppCompatActivity {
             String descricao = editDescricao.getText().toString().trim();
             float nota = ratingBar.getRating();
 
-            // validação
+            // Validação (mantenha igual)
             if (TextUtils.isEmpty(titulo)) {
                 editTitulo.setError("Digite o nome do jogo");
                 return;
             }
-
             if (nota == 0) {
                 Toast.makeText(this, "Dê uma nota para o jogo", Toast.LENGTH_SHORT).show();
                 return;
@@ -55,17 +54,20 @@ public class NovaAvaliacaoActivity extends AppCompatActivity {
                 return;
             }
 
-            // verifica se o jogo já existe, senão cria
+            // Verifica se o jogo existe (ignorando maiúsculas/minúsculas)
             DataHelper.Game game = DataHelper.getGameByName(titulo);
             if (game == null) {
                 game = DataHelper.createGame(titulo);
+                if (game == null) { // Se ainda assim não foi criado
+                    Toast.makeText(this, "Erro ao criar o jogo", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
 
-            // salva a avaliação
+            // Cria a avaliação
             DataHelper.createReview(user.id, game.id, nota, descricao);
-
             Toast.makeText(this, "Avaliação salva com sucesso!", Toast.LENGTH_SHORT).show();
-            finish(); // fecha e volta para a tela anterior (Home)
+            finish();
         });
     }
 }

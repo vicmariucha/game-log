@@ -306,25 +306,33 @@ public class DataHelper {
 
     // Metodo para criar um novo jogo
     public static Game createGame(String name) {
+        // Verifica se o jogo já existe (evita duplicação)
+        for (Game game : games) {
+            if (game.name.equalsIgnoreCase(name)) {
+                return game; // Retorna o jogo existente
+            }
+        }
+
+        // Se não existir, cria um novo
         String newId = "g" + (games.size() + 1);
-        Game newGame = new Game(newId, name, "L", "Desconhecido"); // Criando um jogo com dados padrão
+        Game newGame = new Game(newId, name, "L", "Desconhecido");
         games.add(newGame);
-        saveGames(); // Salva os jogos após a criação
+        saveGames(); // Salva no SharedPreferences
         return newGame;
     }
 
     // Metodo para criar uma nova avaliação
     public static void createReview(String userId, String gameId, float rating, String comment) {
-        String newId = "r" + (reviews.size() + 1);  // Gerar um novo ID
+        String newId = "r" + (reviews.size() + 1);
         Review newReview = new Review(newId, userId, gameId, (int) rating, comment);
-        reviews.add(newReview);  // Adiciona a avaliação à lista
-        saveReviews();  // Salva as avaliações após a criação
+        reviews.add(newReview);
+        saveReviews(); // Salva a nova review
 
-        // Associando a avaliação ao usuário
+        // Associa a review ao usuário e salva a lista de usuários
         for (User user : users) {
             if (user.id.equals(userId)) {
-                user.reviewIds.add(newId);  // Associa a avaliação ao usuário
-                updateUser(user);  // Atualiza o usuário
+                user.reviewIds.add(newId);
+                saveUsers(); // Atualiza o SharedPreferences
                 break;
             }
         }
