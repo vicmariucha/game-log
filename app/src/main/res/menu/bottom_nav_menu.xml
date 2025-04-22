@@ -1,11 +1,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_buscar"
-        android:icon="@drawable/ic_search" />
+        android:icon="@drawable/ic_search"
+        android:title="" />
+
     <item
         android:id="@+id/nav_home"
-        android:icon="@drawable/ic_home" />
+        android:icon="@drawable/ic_home"
+        android:title="" />
+
+    <!-- Item vazio só pra criar espaço no meio -->
+    <item
+        android:id="@+id/nav_empty"
+        android:enabled="false"
+        android:icon="@drawable/ic_empty"
+        android:title=""
+        android:checkable="false" />
+
+    <item
+        android:id="@+id/nav_wishlist"
+        android:icon="@drawable/ic_wishlist"
+        android:title="" />
+
     <item
         android:id="@+id/nav_config"
-        android:icon="@drawable/ic_settings" />
+        android:icon="@drawable/ic_settings"
+        android:title="" />
 </menu>

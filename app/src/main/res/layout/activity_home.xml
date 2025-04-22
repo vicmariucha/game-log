@@ -1,77 +1,91 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/homeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background">
+    android:background="@drawable/gradient_background"
+>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:layout_marginBottom="100dp">
+        android:layout_marginBottom="80dp"
+        android:fillViewport="true">
 
-        <!-- Texto de boas-vindas -->
-        <TextView
-            android:id="@+id/txtWelcome"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="40dp"
-            android:textSize="30sp"
-            android:textColor="#D9D9D9"
-            android:text="Bem-vindo!"
-            android:fontFamily="@font/montserrat_extrabold" />
-
-        <!-- Container branco arredondado para avaliações -->
-        <LinearLayout
-            android:id="@+id/reviewContainer"
-            android:layout_width="350dp"
-            android:layout_height="670dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/background_rounded"
-            android:elevation="4dp"
-            android:gravity="center"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="16dp">
 
-            <!-- Lista de Avaliações -->
-            <ListView
-                android:id="@+id/listReviews"
+            <TextView
+                android:id="@+id/txtWelcome"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="@android:color/darker_gray"
-                android:dividerHeight="1dp" />
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="50dp"
+                android:textSize="30sp"
+                android:textColor="#D9D9D9"
+                android:text="Bem-vindo!"
+                android:fontFamily="@font/montserrat_extrabold" />
+
+            <LinearLayout
+                android:id="@+id/reviewContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_rounded"
+                android:elevation="4dp"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <ListView
+                    android:id="@+id/listReviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="#3025B7"
+                    android:dividerHeight="3dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"/>
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
-    <!-- Botão de avaliação central flutuante -->
-    <ImageButton
-        android:id="@+id/btnNovaAvaliacao"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="70dp"
-        android:background="@drawable/rounded_button_background"
-        android:padding="12dp"
-        android:src="@drawable/ic_add"
-        android:tint="#3025B7"
-        android:contentDescription="Nova Avaliação" />
+<com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/btnNovaAvaliacao"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|center"
+    android:layout_marginBottom="40dp"
+    android:src="@drawable/ic_add"
+    android:contentDescription="Nova Avaliação"
+    app:fabSize="normal"
+    app:tint="@color/primary"
+    android:backgroundTint="@color/navbar_bg"
+    android:elevation="12dp" />
 
-    <!-- Barra de navegação inferior oficial -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="16dp"
+        android:name="com.example.gamelog.WishlistFragment" />
+
+    <com.example.gamelog.CurvedBottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="wrap_content"
+        android:minHeight="40dp"
         android:layout_gravity="bottom"
-        android:background="#D9D9D9"
+        android:background="@android:color/transparent"
+        android:elevation="0dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         app:menu="@menu/bottom_nav_menu"
         app:itemIconTint="@color/nav_item_color"
-        app:itemTextColor="@color/nav_item_color"
-        />
+        app:itemTextColor="@android:color/transparent"
+        app:itemIconSize="28dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

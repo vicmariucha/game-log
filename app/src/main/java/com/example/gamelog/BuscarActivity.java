@@ -7,8 +7,13 @@ import android.text.TextWatcher;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.AdapterView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.view.ViewGroup;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,19 +21,19 @@ public class BuscarActivity extends AppCompatActivity {
 
     private ListView listUsuarios;
     private EditText editBusca;
-    private List<String> allUsers;  // Simulação de dados de usuários
-    private List<String> filteredUsers;
+    private List<String> allUsers;      // Lista completa de usuários simulados
+    private List<String> filteredUsers; // Lista filtrada com base na busca
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buscar);
 
-        // Inicializa os componentes
+        // Inicialização dos componentes de interface
         listUsuarios = findViewById(R.id.listUsuarios);
         editBusca = findViewById(R.id.editBusca);
 
-        // Dados simulados de usuários (substitua com dados reais)
+        // Dados simulados - substitua por dados reais se necessário
         allUsers = new ArrayList<>();
         allUsers.add("João");
         allUsers.add("Maria");
@@ -36,47 +41,55 @@ public class BuscarActivity extends AppCompatActivity {
         allUsers.add("Ana");
         allUsers.add("Lucas");
 
-        // Lista filtrada (inicialmente é igual a todos os usuários)
+        // Inicialmente a lista filtrada contém todos os usuários
         filteredUsers = new ArrayList<>(allUsers);
 
-        // Adaptador para exibir os usuários na ListView
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, filteredUsers);
+        // Adaptador customizado para a ListView
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item_usuario, filteredUsers) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                if (convertView == null) {
+                    convertView = getLayoutInflater().inflate(R.layout.list_item_usuario, parent, false);
+                }
+
+                // Define o nome do usuário no item da lista
+                TextView nomeUsuario = convertView.findViewById(R.id.txtNomeUsuario);
+                nomeUsuario.setText(filteredUsers.get(position));
+
+                // Configura o botão "Ver lista"
+                Button btnVerLista = convertView.findViewById(R.id.btnVerLista);
+                btnVerLista.setOnClickListener(v -> {
+                    String nome = filteredUsers.get(position);
+                    Intent intent = new Intent(BuscarActivity.this, PerfilActivity.class);
+                    intent.putExtra("nomeUsuario", nome);
+                    startActivity(intent);
+                });
+
+                return convertView;
+            }
+        };
+
         listUsuarios.setAdapter(adapter);
 
-        // Listener para o campo de busca
+        // Listener para filtrar conforme o usuário digita
         editBusca.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                // Filtra os usuários com base no texto de busca
-                String query = charSequence.toString().toLowerCase();
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String query = s.toString().toLowerCase().trim();
                 filteredUsers.clear();
                 for (String user : allUsers) {
                     if (user.toLowerCase().contains(query)) {
                         filteredUsers.add(user);
                     }
                 }
-                adapter.notifyDataSetChanged(); // Atualiza a ListView
+                adapter.notifyDataSetChanged(); // Atualiza a ListView com os resultados filtrados
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {}
-        });
-
-        // Listener de clique para abrir o perfil do usuário
-        listUsuarios.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, android.view.View view, int position, long id) {
-                // Obtém o nome do usuário clicado
-                String nomeUsuario = filteredUsers.get(position);
-
-                // Cria a intent para ir para o perfil do usuário
-                Intent intent = new Intent(BuscarActivity.this, PerfilActivity.class);
-                intent.putExtra("nomeUsuario", nomeUsuario); // Passa o nome do usuário para o perfil
-                startActivity(intent);
-            }
+            public void afterTextChanged(Editable s) {}
         });
     }
 }

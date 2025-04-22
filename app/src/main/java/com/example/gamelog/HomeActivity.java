@@ -22,6 +22,7 @@ import java.util.List;
 import com.example.gamelog.NovaAvaliacaoActivity;
 import com.example.gamelog.BuscarActivity;
 import com.example.gamelog.ConfigActivity;
+import com.example.gamelog.WishlistFragment; // Importando o novo fragmento
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -88,6 +89,13 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 } else if (id == R.id.nav_config) {
                     startActivity(new Intent(HomeActivity.this, ConfigActivity.class));
+                    return true;
+                } else if (id == R.id.nav_wishlist) {
+                    // Navegar para o WishlistFragment
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, new WishlistFragment())
+                            .addToBackStack(null)
+                            .commit();
                     return true;
                 }
                 return false;
