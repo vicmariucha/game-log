@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ public class NovaAvaliacaoActivity extends AppCompatActivity {
     private EditText editTitulo, editDescricao;
     private RatingBar ratingBar;
     private Button btnSalvar;
+    private ImageView btnVoltar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +28,17 @@ public class NovaAvaliacaoActivity extends AppCompatActivity {
         editDescricao = findViewById(R.id.editDescricao);
         ratingBar = findViewById(R.id.ratingBar);
         btnSalvar = findViewById(R.id.btnSalvar);
+        btnVoltar = findViewById(R.id.btnVoltar);
+
+        // ação ao clicar na seta de voltar
+        btnVoltar.setOnClickListener(v -> finish());
 
         btnSalvar.setOnClickListener(v -> {
             String titulo = editTitulo.getText().toString().trim();
             String descricao = editDescricao.getText().toString().trim();
             float nota = ratingBar.getRating();
 
-            // Validação
+            // validação
             if (TextUtils.isEmpty(titulo)) {
                 editTitulo.setError("Digite o nome do jogo");
                 return;
@@ -49,17 +55,17 @@ public class NovaAvaliacaoActivity extends AppCompatActivity {
                 return;
             }
 
-            // Verifica se o jogo já existe, senão cria
+            // verifica se o jogo já existe, senão cria
             DataHelper.Game game = DataHelper.getGameByName(titulo);
             if (game == null) {
                 game = DataHelper.createGame(titulo);
             }
 
-            // Salva a avaliação
+            // salva a avaliação
             DataHelper.createReview(user.id, game.id, nota, descricao);
 
             Toast.makeText(this, "Avaliação salva com sucesso!", Toast.LENGTH_SHORT).show();
-            finish(); // Fecha e volta para a tela anterior (Home)
+            finish(); // fecha e volta para a tela anterior (Home)
         });
     }
 }

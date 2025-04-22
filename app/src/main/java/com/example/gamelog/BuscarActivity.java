@@ -33,7 +33,7 @@ public class BuscarActivity extends AppCompatActivity {
         listUsuarios = findViewById(R.id.listUsuarios);
         editBusca = findViewById(R.id.editBusca);
 
-        // Dados simulados - substitua por dados reais se necessário
+        // Dados simulados
         allUsers = new ArrayList<>();
         allUsers.add("João");
         allUsers.add("Maria");
