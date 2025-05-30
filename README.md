@@ -70,7 +70,7 @@ As telas de login e cadastro já foram implementadas e estão sendo testadas. O 
 
 ## 🙋‍♀️ Desenvolvido por
 
-Feito com carinho por [Mariucha](https://github.com/vicmariucha) 💜  
+Feito com carinho por [Mariucha](https://github.com/vicmariucha), [Argoze](https://github.com/Argoze) 💜  
 Se quiser trocar uma ideia ou dar um feedback, é só me chamar! 😊
 
 ---
